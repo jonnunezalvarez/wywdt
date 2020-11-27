@@ -1,18 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FlatList, Text, TextInput, Button } from 'react-native'
+import { v4 as uuidv4 } from 'uuid'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+const saveData = async (task) => {
+    try {
+        console.log(`saving new task '${task}'`)
+        await AsyncStorage.setItem(uuidv4(), task)
+    } catch (e) {
+        console.log(`Could not save the new task: ${e}`)
+    }
+}
 
 const TaskList = () => {
-    // TODO delete
-    const initialTasks = [
-        { id: '1', task: 'Code Review' },
-        { id: '2', task: 'Finish wordings' },
-        { id: '3', task: 'Continue with Guide +- 1 hour' },
-        { id: '4', task: 'Deploy service XXX to integration for testing' }
-    ]
-
     const [newTask, setNewTask] = useState('')
-    const [tasks, setTasks] = useState(initialTasks)
+    const [tasks, setTasks] = useState([])
 
+    const getData = async () => {
+        try {
+            const keys = await AsyncStorage.getAllKeys()
+            const data = await AsyncStorage.multiGet(keys)
+            setTasks(data)
+        } catch (e) {
+            console.log(`Could not get tasks: ${e}`)
+        }
+    }
+
+    const removeTask = async (taskId) => {
+        try {
+            await AsyncStorage.removeItem(taskId)
+        } catch(e) {
+            console.log(`Could not remove task: ${taskId} - ${e}`)
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     return (
         <React.Fragment>
@@ -23,18 +48,29 @@ const TaskList = () => {
             />
             <Button
                 title={'Add'}
-                onPress={() => { 
+                onPress={async () => {
                     if (newTask && newTask !== '') {
-                        setTasks([...tasks, { id: `${tasks.length + 1}`, task: newTask }]) 
-                        console.log('haha')
-                        setNewTask('')
+                        await saveData(newTask)
+                        await getData()
                     }
                 }}
             />
             <FlatList
                 data={tasks}
                 renderItem={
-                    ({ item }) => <Text>{item.id}. {item.task}</Text>
+                    ({ item }) =>
+                        <React.Fragment>
+                            <Text>{`=> ${item[1]}`}</Text>
+                            <Button
+                                title={'Delete'}
+                                onPress={async () => {
+                                    console.log(`Deleting task...${item[0]} : ${item[1]}`)
+                                    await removeTask(item[0])
+                                    await getData()
+                                }}
+                            />
+                        </React.Fragment>
+
                 }
             />
         </React.Fragment>

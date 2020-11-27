@@ -1119,6 +1119,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@react-native-async-storage/async-storage@^1.13.2":
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.13.2.tgz#649f78527f16cd5a87071a888219ef7a35ef5c79"
+  integrity sha512-isTDvUApRJPVWFxV15yrQSOGqarX7cIedq/y4N5yWSnotf68D9qvDEv1I7rCXhkBDi0u4OJt6GA9dksUT0D3wg==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^4.13.1":
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.13.1.tgz#07de6d4dab80ec49231de1f1fbf658b4ad39b32c"
@@ -5457,6 +5464,11 @@ uuid@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
   integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
+
+uuid@^8.3.1:
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.1.tgz#2ba2e6ca000da60fce5a196954ab241131e05a31"
+  integrity sha512-FOmRr+FmWEIG8uhZv6C2bTgEVXsHk08kE7mPlrBbEe+c3r9pjceVPgupIfNIhc4yx55H69OXANrUaSuu9eInKg==
 
 vary@~1.1.2:
   version "1.1.2"
